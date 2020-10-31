@@ -1,5 +1,5 @@
 {
-  "name": "sap-cf-axios",
+  "name": "@agilita/sap-cf-axios",
   "version": "0.2.2",
   "description": "Wrap axios to use the SAP Cloud Foundry destination Service",
   "main": "dist/index.js",

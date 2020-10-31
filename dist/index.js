@@ -17,8 +17,8 @@ const axios_1 = __importDefault(require("axios"));
 // import axiosCookieJarSupport from 'axios-cookiejar-support';
 // import * as tough from 'tough-cookie';
 const configEnhancer_1 = __importDefault(require("./configEnhancer"));
-function SapCfAxios(destination, instanceConfig, xsrfConfig = 'options') {
-    const instanceProm = createInstance(destination, instanceConfig);
+function SapCfAxios(destination, instanceConfig, xsrfConfig = 'options', configEnhancer) {
+    const instanceProm = createInstance(destination, instanceConfig, configEnhancer);
     return (req) => __awaiter(this, void 0, void 0, function* () {
         if (req.xsrfHeaderName && req.xsrfHeaderName !== 'X-XSRF-TOKEN') {
             // handle x-csrf-Token
@@ -32,7 +32,7 @@ function SapCfAxios(destination, instanceConfig, xsrfConfig = 'options') {
                 }
             };
             try {
-                const { headers } = yield (yield instanceProm)(tokenReq);
+                const {headers} = yield (yield instanceProm)(tokenReq);
                 const cookies = headers["set-cookie"]; // get cookie from request
                 // req.headers = {...req.headers, [req.xsrfHeaderName]: headers[req.xsrfHeaderName]}
                 if (headers) {
@@ -43,8 +43,7 @@ function SapCfAxios(destination, instanceConfig, xsrfConfig = 'options') {
                     ;
                     req.headers[req.xsrfHeaderName] = headers[req.xsrfHeaderName];
                 }
-            }
-            catch (err) {
+            } catch (err) {
                 console.log(err);
             }
         }
@@ -53,7 +52,7 @@ function SapCfAxios(destination, instanceConfig, xsrfConfig = 'options') {
 }
 exports.default = SapCfAxios;
 // exports = SapCfAxios;
-function createInstance(destinationName, instanceConfig) {
+function createInstance(destinationName, instanceConfig, configEnhancer) {
     return __awaiter(this, void 0, void 0, function* () {
         // we will add an interceptor to axios that will take care of the destination configuration
         const instance = axios_1.default.create(instanceConfig);
@@ -67,6 +66,7 @@ function createInstance(destinationName, instanceConfig) {
             const auth = config.headers.Authorization || config.headers.authorization;
             try {
                 const destination = yield sap_cf_destconn_1.readDestination(destinationName, auth);
+                if (configEnhancer) configEnhancer(config, destination);
                 return yield configEnhancer_1.default(config, destination);
             }
             catch (e) {

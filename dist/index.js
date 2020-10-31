@@ -65,7 +65,20 @@ function createInstance(destinationName, instanceConfig, configEnhancer) {
             // enhance config object with destination information
             const auth = config.headers.Authorization || config.headers.authorization;
             try {
-                const destination = yield sap_cf_destconn_1.readDestination(destinationName, auth);
+                let destination = null;
+                if (instance.__sap_cf_axios) {
+                    var five_minutes = 5 * 60 * 1000; /* ms */
+                    if (((new Date()) - instance.__sap_cf_axios.destinationReadTime) < five_minutes) {
+                        destination = instance.__sap_cf_axios.destination;
+                    }
+                }
+                if (!destination) {
+                    destination = yield sap_cf_destconn_1.readDestination(destinationName, auth);
+                    instance.__sap_cf_axios = {
+                        destination: destination,
+                        destinationReadTime: new Date()
+                    }
+                }
                 if (configEnhancer) configEnhancer(config, destination);
                 return yield configEnhancer_1.default(config, destination);
             }

@@ -1,5 +1,11 @@
-import { AxiosRequestConfig, AxiosResponse, Method } from 'axios';
-export default function SapCfAxios(destination: string, instanceConfig?: AxiosRequestConfig, xsrfConfig?: Method | {
+import { IHTTPDestinationConfiguration, IDestinationData } from 'sap-cf-destconn';
+import { AxiosInstance, AxiosRequestConfig, Method } from 'axios';
+interface SapCfAxiosInstance extends AxiosInstance {
+    destinationConfiguration: Promise<IDestinationData<IHTTPDestinationConfiguration>>;
+    destinationReadTime: Date;
+}
+export default function SapCfAxios(destinationName: string, instanceConfig?: AxiosRequestConfig, xsrfConfig?: Method | {
     method: Method;
     url: string;
-}): <T>(req: AxiosRequestConfig) => Promise<AxiosResponse<T>>;
+}): SapCfAxiosInstance;
+export {};

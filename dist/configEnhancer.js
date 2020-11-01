@@ -14,10 +14,38 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const axios_1 = __importDefault(require("axios"));
 const sap_cf_destconn_1 = require("sap-cf-destconn");
-function enhanceConfig(config, destination) {
+function enhanceConfig(config, destination, xsrfConfig = 'options') {
     return __awaiter(this, void 0, void 0, function* () {
         // add auth header
         const destinationConfiguration = destination.destinationConfiguration;
+        if (config.xsrfHeaderName && config.xsrfHeaderName !== 'X-XSRF-TOKEN') {
+            // handle x-csrf-Token
+            const csrfMethod = typeof xsrfConfig === 'string' ? xsrfConfig : (xsrfConfig.method || 'options');
+            const csrfUrl = typeof xsrfConfig === 'string' ? config.url : xsrfConfig.url;
+            var tokenconfig = {
+                url: csrfUrl,
+                method: csrfMethod,
+                headers: {
+                    [config.xsrfHeaderName]: "Fetch"
+                }
+            };
+            try {
+                const { headers } = yield (yield axios_1.default)(tokenconfig);
+                const cookies = headers["set-cookie"]; // get cookie from configuest
+                // config.headers = {...config.headers, [config.xsrfHeaderName]: headers[config.xsrfHeaderName]}
+                if (headers) {
+                    if (!config.headers)
+                        config.headers = {};
+                    if (cookies)
+                        config.headers.cookie = cookies.join('; ');
+                    ;
+                    config.headers[config.xsrfHeaderName] = headers[config.xsrfHeaderName];
+                }
+            }
+            catch (err) {
+                console.log(err);
+            }
+        }
         if (destinationConfiguration.Authentication === "OAuth2ClientCredentials") {
             const clientCredentialsToken = yield createToken(destinationConfiguration);
             config.headers = Object.assign(Object.assign({}, config.headers), { Authorization: `Bearer ${clientCredentialsToken}` });

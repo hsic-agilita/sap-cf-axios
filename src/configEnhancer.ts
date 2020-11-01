@@ -1,11 +1,39 @@
 
-import axios, { AxiosRequestConfig } from 'axios';
+import axios, { AxiosRequestConfig, Method} from 'axios';
 import { readConnectivity, IDestinationConfiguration, IDestinationData, IHTTPDestinationConfiguration } from 'sap-cf-destconn';
 
-export default async function enhanceConfig(config: AxiosRequestConfig, destination: IDestinationData<IHTTPDestinationConfiguration>) {
+export default async function enhanceConfig(config: AxiosRequestConfig, destination: IDestinationData<IHTTPDestinationConfiguration>, xsrfConfig: Method | {method: Method, url: string} = 'options') {
 
     // add auth header
     const destinationConfiguration = destination.destinationConfiguration;
+
+    if (config.xsrfHeaderName && config.xsrfHeaderName !== 'X-XSRF-TOKEN') {
+        // handle x-csrf-Token
+        const csrfMethod = typeof xsrfConfig === 'string' ? xsrfConfig : (xsrfConfig.method || 'options');
+        const csrfUrl    = typeof xsrfConfig === 'string' ? config.url : xsrfConfig.url;
+
+        var tokenconfig: AxiosRequestConfig = {
+            url: csrfUrl,
+            method: csrfMethod,
+            headers: {
+                [config.xsrfHeaderName]: "Fetch"
+            }
+        };
+        try{
+            const { headers } = await (await axios)(tokenconfig);
+            const cookies = headers["set-cookie"]; // get cookie from configuest
+
+            // config.headers = {...config.headers, [config.xsrfHeaderName]: headers[config.xsrfHeaderName]}
+            if (headers) {
+                if (!config.headers) config.headers = {};
+                if (cookies) config.headers.cookie = cookies.join('; ');;
+                config.headers[config.xsrfHeaderName] = headers[config.xsrfHeaderName];
+            }
+        } catch (err) {
+            console.log(err);
+        }
+
+    }
 
     if (destinationConfiguration.Authentication === "OAuth2ClientCredentials") {
         const clientCredentialsToken = await createToken(destinationConfiguration);
@@ -65,7 +93,7 @@ async function createToken(dc: IHTTPDestinationConfiguration): Promise<string> {
         url: `${dc.tokenServiceURL}`,
         method: 'POST',
         responseType: 'json',
-        data: `client_id=${encodeURIComponent(dc.clientId)}&grant_type=client_credentials`,
+        data: `client_id=${encodeURIComponent(dc.clientId)}&client_secret=${encodeURIComponent(dc.clientSecret)}&grant_type=client_credentials`,
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         auth: {
             username: dc.clientId,

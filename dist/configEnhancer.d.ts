@@ -1,6 +1,9 @@
-import { AxiosRequestConfig } from 'axios';
+import { AxiosRequestConfig, Method } from 'axios';
 import { IDestinationData, IHTTPDestinationConfiguration } from 'sap-cf-destconn';
-export default function enhanceConfig(config: AxiosRequestConfig, destination: IDestinationData<IHTTPDestinationConfiguration>): Promise<{
+export default function enhanceConfig(config: AxiosRequestConfig, destination: IDestinationData<IHTTPDestinationConfiguration>, xsrfConfig?: Method | {
+    method: Method;
+    url: string;
+}): Promise<{
     baseURL: string;
     url?: string | undefined;
     method?: "link" | "head" | "get" | "GET" | "delete" | "DELETE" | "HEAD" | "options" | "OPTIONS" | "post" | "POST" | "put" | "PUT" | "patch" | "PATCH" | "LINK" | "unlink" | "UNLINK" | undefined;

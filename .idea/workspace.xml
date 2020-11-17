@@ -21,10 +21,6 @@
   <component name="ChangeListManager">
     <list default="true" id="9f162494-0ccc-4439-a902-f7268bcfcce4" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/configEnhancer.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/dist/configEnhancer.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/configEnhancer.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/configEnhancer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/index.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/dist/index.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/configEnhancer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/configEnhancer.ts" afterDir="false" />
@@ -65,7 +61,10 @@
       <workItem from="1604183135693" duration="752000" />
       <workItem from="1604223913610" duration="868000" />
       <workItem from="1604225068686" duration="3000" />
-      <workItem from="1604259348464" duration="2145000" />
+      <workItem from="1604259348464" duration="2601000" />
+      <workItem from="1604388135656" duration="534000" />
+      <workItem from="1605644410467" duration="1291000" />
+      <workItem from="1605646449821" duration="293000" />
     </task>
     <servers />
   </component>

@@ -1,6 +1,6 @@
 
 import axios, { AxiosRequestConfig, Method} from 'axios';
-import { readConnectivity, IDestinationConfiguration, IDestinationData, IHTTPDestinationConfiguration } from 'sap-cf-destconn';
+import { readConnectivity, IDestinationConfiguration, IDestinationData, IHTTPDestinationConfiguration } from '@agilita/sap-cf-destconn';
 
 export default async function enhanceConfig(config: AxiosRequestConfig, destination: IDestinationData<IHTTPDestinationConfiguration>, xsrfConfig: Method | {method: Method, url: string} = 'options') {
 

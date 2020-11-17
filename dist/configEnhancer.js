@@ -13,7 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const axios_1 = __importDefault(require("axios"));
-const sap_cf_destconn_1 = require("sap-cf-destconn");
+const sap_cf_destconn_1 = require("@agilita/sap-cf-destconn");
 function enhanceConfig(config, destination, xsrfConfig = 'options') {
     return __awaiter(this, void 0, void 0, function* () {
         // add auth header

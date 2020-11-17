@@ -1,6 +1,6 @@
 {
   "name": "@agilita/sap-cf-axios",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "Wrap axios to use the SAP Cloud Foundry destination Service",
   "main": "dist/index.js",
   "files": [
@@ -22,9 +22,9 @@
   "author": "Joachim Van Praet",
   "license": "ISC",
   "dependencies": {
+    "@agilita/sap-cf-destconn": "0.0.23",
     "@sap/xsenv": "^2.1.0",
-    "axios": "^0.19.1",
-    "sap-cf-destconn": "0.0.5"
+    "axios": "^0.19.1"
   },
   "devDependencies": {
     "@types/sap__xsenv": "^2.0.0",

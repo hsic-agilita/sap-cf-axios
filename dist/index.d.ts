@@ -1,4 +1,4 @@
-import { IHTTPDestinationConfiguration, IDestinationData } from 'sap-cf-destconn';
+import { IHTTPDestinationConfiguration, IDestinationData } from '@agilita/sap-cf-destconn';
 import { AxiosInstance, AxiosRequestConfig, Method } from 'axios';
 interface SapCfAxiosInstance extends AxiosInstance {
     destinationConfiguration: Promise<IDestinationData<IHTTPDestinationConfiguration>>;

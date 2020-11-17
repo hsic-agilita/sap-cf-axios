@@ -1,5 +1,5 @@
 import { AxiosRequestConfig, Method } from 'axios';
-import { IDestinationData, IHTTPDestinationConfiguration } from 'sap-cf-destconn';
+import { IDestinationData, IHTTPDestinationConfiguration } from '@agilita/sap-cf-destconn';
 export default function enhanceConfig(config: AxiosRequestConfig, destination: IDestinationData<IHTTPDestinationConfiguration>, xsrfConfig?: Method | {
     method: Method;
     url: string;

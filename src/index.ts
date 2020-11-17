@@ -1,4 +1,4 @@
-import { readDestination, IHTTPDestinationConfiguration, IDestinationData } from 'sap-cf-destconn'
+import { readDestination, IHTTPDestinationConfiguration, IDestinationData } from '@agilita/sap-cf-destconn'
 import axios, {AxiosInstance, AxiosRequestConfig, AxiosResponse, Method} from 'axios';
 // import axiosCookieJarSupport from 'axios-cookiejar-support';
 // import * as tough from 'tough-cookie';

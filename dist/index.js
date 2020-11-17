@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const sap_cf_destconn_1 = require("sap-cf-destconn");
+const sap_cf_destconn_1 = require("@agilita/sap-cf-destconn");
 const axios_1 = __importDefault(require("axios"));
 // import axiosCookieJarSupport from 'axios-cookiejar-support';
 // import * as tough from 'tough-cookie';
